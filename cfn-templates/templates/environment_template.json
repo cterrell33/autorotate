@@ -1,0 +1,22 @@
+[
+    {
+      "ParameterKey": "VpcId",
+      "ParameterValue": "VPC_ID"
+    },
+    {
+        "ParameterKey": "SubnetIDs",
+        "ParameterValue": "SUBNET_A, SUBNET_B"
+    },
+    {
+        "ParameterKey": "Password",
+        "ParameterValue": "P@$$Word123"
+    },
+    {
+        "ParameterKey": "ImageId",
+        "ParameterValue": "ami-0be29bafdaad782db"
+    },
+    {
+        "ParameterKey": "RouteTable",
+        "ParameterValue": "ROUTE_TABLE"
+    }
+]
