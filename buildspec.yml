@@ -11,7 +11,7 @@ phases:
   build:
     commands:
       - yum install samba -y
-      - echo -e "password1!" "\n""superman23!" "\n""superman23!" |smbpasswd -U test2 -r 172.31.13.63
+      - echo -e "password1!" "\n""superman23!" "\n""superman23!" "\n""superman23!"|smbpasswd -U test2 -r 172.31.13.63
   post_build:
     commands:
       - echo Build completed on `date`
