@@ -10,7 +10,7 @@ phases:
       - ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
   build:
     commands:
-      - sudo yum install samba
+      - yum install samba
       - smbpasswd -U test2 -r 172.31.11.167
   post_build:
     commands:
