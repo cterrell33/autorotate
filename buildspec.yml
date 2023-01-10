@@ -8,14 +8,14 @@ phases:
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       - unzip awscliv2.zip
       - ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
-  build:
-    commands:
-     # - ping -c 172.31.2.156
       - yum install iputils which -y
       - which ping 
       - ping -c 10 172.31.2.156
+  build:
+    commands:
+     # - ping -c 172.31.2.156
       - yum install samba -y
-      - echo -e "password1!" "\n""superman23!" "\n""superman23!" "\n""superman23!"|smbpasswd -U test1 -r 172.31.2.156
+      - echo -e "password1!""\n""superman23!""\n""superman23!""\n""superman23!"|smbpasswd -U test1 -r 172.31.2.156
   post_build:
     commands:
       - echo Build completed on `date`
