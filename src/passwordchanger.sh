@@ -1,8 +1,20 @@
-currentpw=$(aws secretsmanager get-secret-value --secret-id test1 --query SecretString --output text)
+#!\bin\bash
 
-echo -e "$currentpw""\n""superman23!""\n""superman23!""\n""superman23!"|smbpasswd -U test1 -r 172.31.2.156
+
+currentpw=$(aws secretsmanager get-secret-value --secret-id test1 --query SecretString --output text)
+newpw=$(aws secretsmanager get-random-password --require-each-included-type --password-length 12 --output text)
+
+echo -e "$currentpw""\n""$newpw""\n""$newpw""\n""$newpw"|smbpasswd -U test1 -r 172.31.2.156
 if [ $? -eq 0 ]; then
     echo "Password Rotated Successfully"
 else 
     echo "Password Changed Failed"
+fi 
+
+#Update Secrets Manager with new Random Generated PW
+aws secretsmanager update-secret --secret-id test1 --secret-string "$newpw"
+if [ $? -eq 0 ]; then
+    echo "New PW Stored Successfully"
+else 
+    echo "Password not Stored in Secrets Manager"
 fi 

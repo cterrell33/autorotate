@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  Enviornment for the "lab"
+  Enviornment for the "Automating Password Rotation with CodeBuild"
 
 Parameters:
   ImageId:
