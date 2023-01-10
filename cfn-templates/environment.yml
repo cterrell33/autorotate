@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  Enviornment for the "Automating Password Rotation with CodeBuild"
+  Enviornment for the "lab"
 
 Parameters:
   ImageId:
@@ -131,6 +131,32 @@ Resources:
           FromPort: '-1'
           ToPort: '-1'
           CidrIp: !Ref RDPLocation
+
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties: 
+      Artifacts: 
+        Artifacts
+      Description: String
+      EncryptionKey: String
+      Environment: 
+        Environment
+      FileSystemLocations: 
+        - ProjectFileSystemLocation
+      LogsConfig: 
+        LogsConfig
+      Name: String
+      QueuedTimeoutInMinutes: Integer
+      ResourceAccessRole: String
+      ServiceRole: String
+      Source: 
+        Source
+      SourceVersion: String
+      Tags: 
+        - Tag
+      TimeoutInMinutes: Integer
+      VpcConfig: 
+        VpcConfig
 
 Outputs:
   InstanceSecurityGroup:
