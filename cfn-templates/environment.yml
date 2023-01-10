@@ -93,7 +93,7 @@ Resources:
           yum install samba -y
       Tags:
         - Key: "Name"
-          Value: "Linux_Node"        
+          Value: "Linux_Node"
 
   EC2InstanceRole:
     Type: 'AWS::IAM::Role'
