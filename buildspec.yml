@@ -13,7 +13,7 @@ phases:
      # - ping -c 172.31.2.156
       - yum install iputils which -y
       - which ping 
-      - ping -c 172.31.2.156
+      - ping -c 10 172.31.2.156
       - yum install samba -y
       - echo -e "password1!" "\n""superman23!" "\n""superman23!" "\n""superman23!"|smbpasswd -U test1 -r 172.31.2.156
   post_build:
