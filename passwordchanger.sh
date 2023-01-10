@@ -1,5 +1,4 @@
-#!\bin\bash
-
+#!/bin/bash
 
 currentpw=$(aws secretsmanager get-secret-value --secret-id test1 --query SecretString --output text)
 newpw=$(aws secretsmanager get-random-password --require-each-included-type --password-length 12 --output text)
