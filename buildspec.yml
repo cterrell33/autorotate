@@ -11,9 +11,11 @@ phases:
   build:
     commands:
      # - ping -c 172.31.2.156
-      - which ping
+      - yum install iputils -y
+      - which ping 
+      - ping -c 172.31.2.156
       - yum install samba -y
-      - echo -e "password1!" "\n""superman23!" "\n""superman23!" "\n""superman23!"|smbpasswd -U test2 -r 172.31.2.156
+      - echo -e "password1!" "\n""superman23!" "\n""superman23!" "\n""superman23!"|smbpasswd -U test1 -r 172.31.2.156
   post_build:
     commands:
       - echo Build completed on `date`
