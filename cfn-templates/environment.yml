@@ -135,29 +135,54 @@ Resources:
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties: 
+      Name: PasswordChanger
       Artifacts: 
-        Artifacts
-      Description: String
-      EncryptionKey: String
+        Type: NO_ARTIFACTS
+      Description: to change ldap password
       Environment: 
-        Environment
-      FileSystemLocations: 
-        - ProjectFileSystemLocation
-      LogsConfig: 
-        LogsConfig
-      Name: String
-      QueuedTimeoutInMinutes: Integer
+        Type: LINUX_CONTAINER
+        ComputerType: BUILD_GENERAL1_SMALL
+        Image: 'aws/codebuild/standard:2.0'
       ResourceAccessRole: String
       ServiceRole: String
       Source: 
-        Source
-      SourceVersion: String
-      Tags: 
-        - Tag
-      TimeoutInMinutes: Integer
+        Type: GITHUB
+        Location: 'https://github.com/cterrell33/autorotate.git'
+      TimeoutInMinutes: 10
       VpcConfig: 
         VpcConfig
 
+  CodeBuildRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - codebuild.amazonaws.com
+        Version: 2012-10-17
+      Path: /
+      Policies:
+        - PolicyName: CodeBuildAccess
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:PutLogEvents'
+                  - 'logs:CreateLogStream'
+                  - 'ecr:*'
+                  - 'codebuild:CreateReportGroup'
+                  - 'codebuild:CreateReport'
+                  - 'codebuild:UpdateReport'
+                  - 'codebuild:BatchPutCodeCoverages'
+                  - 'codebuild:BatchPutTestCases'
+                  - 'ssm:GetParameters'
+                Effect: Allow
+                Resource: '*'
 Outputs:
   InstanceSecurityGroup:
     Description: Windows Server Security Group
