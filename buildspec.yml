@@ -15,7 +15,8 @@ phases:
     commands:
      # - ping -c 172.31.2.156
       - yum install samba -y
-      - echo -e "password1!""\n""superman23!""\n""superman23!""\n""superman23!"|smbpasswd -U test1 -r 172.31.2.156
+      - chmod +x passwordchanger.sh
+      - ./passwordchanger.sh
   post_build:
     commands:
       - echo Build completed on `date`
