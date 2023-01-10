@@ -11,7 +11,7 @@ phases:
   build:
     commands:
      # - ping -c 172.31.2.156
-      - yum install iputils -y
+      - yum install iputils which -y
       - which ping 
       - ping -c 172.31.2.156
       - yum install samba -y
