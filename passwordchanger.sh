@@ -5,7 +5,7 @@ newpw=$(aws secretsmanager get-random-password --require-each-included-type --pa
 
 echo -e "$currentpw""\n""$newpw""\n""$newpw""\n""$newpw"|smbpasswd -U test1 -r 172.31.2.156
 if [ $? -eq 0 ]; then
-    echo "Password Rotated Successfully"
+    echo "Password Change Successfully"
 else 
     echo "Password Changed Failed"
 fi 
