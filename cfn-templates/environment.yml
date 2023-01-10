@@ -43,7 +43,7 @@ Resources:
   secret:
     Type: 'AWS::SecretsManager::Secret'
     Properties:
-      Name: test1
+      Name: test2
       SecretString: password1!
 
   WindowsEC2Instance:
@@ -141,16 +141,14 @@ Resources:
       Description: to change ldap password
       Environment: 
         Type: LINUX_CONTAINER
-        ComputerType: BUILD_GENERAL1_SMALL
-        Image: 'aws/codebuild/standard:2.0'
-      ResourceAccessRole: String
-      ServiceRole: String
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: 'aws/codebuild/amazonlinux20x86_64-standard:2.0'
+      ServiceRole: !GetAtt CodeBuildRole.Arn
       Source: 
         Type: GITHUB
         Location: 'https://github.com/cterrell33/autorotate.git'
       TimeoutInMinutes: 10
-      VpcConfig: 
-        VpcConfig
+
 
   CodeBuildRole:
     Type: 'AWS::IAM::Role'

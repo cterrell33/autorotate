@@ -16,6 +16,10 @@
         "ParameterValue": "ami-0be29bafdaad782db"
     },
     {
+        "ParameterKey": "Linux",
+        "ParameterValue": "ami-0b5eea76982371e91"
+    },
+    {
         "ParameterKey": "RouteTable",
         "ParameterValue": "ROUTE_TABLE"
     }
