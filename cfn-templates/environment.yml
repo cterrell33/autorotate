@@ -210,7 +210,6 @@ Resources:
     Properties: 
       AllocationId: !GetAtt NATGatewayEIP.AllocationId
       ConnectivityType: public
-      PrivateIpAddress: String
       SubnetId: subnet-0f05a45a07786d0fc
   NATGatewayEIP:
    Type: AWS::EC2::EIP
