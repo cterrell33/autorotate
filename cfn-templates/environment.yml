@@ -144,9 +144,7 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_MEDIUM
         Image: 'aws/codebuild/amazonlinux2-x86_64-standard:4.0'
-      ServiceRole: 
-      - !GetAtt CodeBuildRole1.Arn
-      - 
+      ServiceRole: !GetAtt CodeBuildRole.Arn
       Source: 
         Type: GITHUB
         Location: 'https://github.com/cterrell33/autorotate.git'
@@ -186,7 +184,7 @@ Resources:
 #                Effect: Allow
 #                Resource: '*'
   
-  CodeBuildRole1:
+  CodeBuildRole:
     Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:
@@ -204,7 +202,7 @@ Resources:
         - !Sub arn:${AWS::Partition}:iam::aws:policy/AWSCodeBuildAdminAccess
         - !Sub arn:${AWS::Partition}:iam::aws:policy/SecretsManagerReadWrite
 
-  Routetable:
+  NewRoutetable:
     Type: AWS::EC2::RouteTable
     Properties: 
       VpcId: !Ref VpcId
@@ -218,6 +216,13 @@ Resources:
    Type: AWS::EC2::EIP
    Properties:
       Domain: !Ref VpcId
+  RouteNATGateway:
+   DependsOn: NatGateway
+   Type: AWS::EC2::Route
+   Properties:
+      RouteTableId: !Ref NewRouteTable
+      DestinationCidrBlock: '0.0.0.0/0'
+      NatGatewayId: !Ref NATGateway
 
 Outputs:
   InstanceSecurityGroup:
