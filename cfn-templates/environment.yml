@@ -38,12 +38,7 @@ Parameters:
   RouteTable:
     Description: Route Table Id
     Type: String
-  AWSCodeBuildAdminAccess:
-    Type: String
-    Description: 'arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess'
-  SecretsManagerReadWrite:
-    Type: String
-    Description: 'arn:aws:iam::aws:policy/SecretsManagerReadWrite'
+
 
 Resources:
   secret:
@@ -120,7 +115,7 @@ Resources:
         - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonEC2ReadOnlyAccess
         - !Sub arn:${AWS::Partition}:iam::aws:policy/AWSCloudFormationReadOnlyAccess
         - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonEC2FullAccess
-      
+    
   EC2InstanceProfile:
     Type: 'AWS::IAM::InstanceProfile'
     Properties:
@@ -204,16 +199,12 @@ Resources:
               - 'sts:AssumeRole'
       Path: /
       ManagedPolicyArns:
-        - !Ref AWSCodeBuildAdminAccess
-        - !Ref SecretsManagerReadWrite
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AWSCodeBuildAdminAccess
 
   Routetable:
     Type: AWS::EC2::RouteTable
     Properties: 
-      Tags: 
-      - Keys: Name
-      - Value: RT2
-      VpcId: $VpcId
+      VpcId: !Ref VpcId
   NatGateway:
     Type: AWS::EC2::NatGateway
     Properties: 
@@ -224,8 +215,7 @@ Resources:
   NATGatewayEIP:
    Type: AWS::EC2::EIP
    Properties:
-      Domain: $VpcId
-
+      Domain: !Ref VpcId
 
 Outputs:
   InstanceSecurityGroup:
@@ -238,8 +228,3 @@ Outputs:
     Value: !Ref EC2InstanceProfile
     Export:
       Name: !Sub "${AWS::StackName}-EC2InstanceProfile"
-  Logical ID:
-    Description: Information about the value
-    Value: Value to return
-    Export:
-      Name: Name of resource to export
