@@ -38,6 +38,12 @@ Parameters:
   RouteTable:
     Description: Route Table Id
     Type: String
+  AWSCodeBuildAdminAccess:
+    Type: String
+    Description: 'arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess'
+  SecretsManagerReadWrite:
+    Type: String
+    Description: 'arn:aws:iam::aws:policy/SecretsManagerReadWrite'
 
 Resources:
   secret:
@@ -143,45 +149,64 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_MEDIUM
         Image: 'aws/codebuild/amazonlinux2-x86_64-standard:4.0'
-      ServiceRole: !GetAtt CodeBuildRole.Arn
+      ServiceRole: !GetAtt CodeBuildRole1.Arn
       Source: 
         Type: GITHUB
         Location: 'https://github.com/cterrell33/autorotate.git'
       TimeoutInMinutes: 10
 
 
-  CodeBuildRole:
+#  CodeBuildRole:
+#    Type: 'AWS::IAM::Role'
+#    Properties:
+#      AssumeRolePolicyDocument:
+#        Statement:
+#          - Action:
+#              - 'sts:AssumeRole'
+#            Effect: Allow
+#            Principal:
+#              Service:
+#                - codebuild.amazonaws.com
+#                - secretsmanager.amazonaws.com
+#        Version: 2012-10-17
+#      Path: /
+#      Policies:
+#        - PolicyName: CodeBuildAccess
+#          PolicyDocument:
+#            Version: 2012-10-17
+#            Statement:
+#              - Action:
+#                  - 'logs:CreateLogGroup'
+#                  - 'logs:PutLogEvents'
+#                  - 'logs:CreateLogStream'
+#                  - 'ecr:*'
+#                  - 'codebuild:CreateReportGroup'
+#                  - 'codebuild:CreateReport'
+#                  - 'codebuild:UpdateReport'
+#                  - 'codebuild:BatchPutCodeCoverages'
+#                  - 'codebuild:BatchPutTestCases'
+#                  - 'ssm:GetParameters'
+#                Effect: Allow
+#                Resource: '*'
+  
+  CodeBuildRole1:
     Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:
+        Version: '2012-10-17'
         Statement:
-          - Action:
-              - 'sts:AssumeRole'
-            Effect: Allow
+          - Effect: Allow
             Principal:
               Service:
                 - codebuild.amazonaws.com
-        Version: 2012-10-17
+                - secretsmanager.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
       Path: /
-      Policies:
-        - PolicyName: CodeBuildAccess
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Action:
-                  - 'logs:CreateLogGroup'
-                  - 'logs:PutLogEvents'
-                  - 'logs:CreateLogStream'
-                  - 'ecr:*'
-                  - 'codebuild:CreateReportGroup'
-                  - 'codebuild:CreateReport'
-                  - 'codebuild:UpdateReport'
-                  - 'codebuild:BatchPutCodeCoverages'
-                  - 'codebuild:BatchPutTestCases'
-                  - 'ssm:GetParameters'
-                Effect: Allow
-                Resource: '*'
-      
+      ManagedPolicyArns:
+        - !Ref AWSCodeBuildAdminAccess
+        - !Ref SecretsManagerReadWrite
+
   Routetable:
     Type: AWS::EC2::RouteTable
     Properties: 
@@ -213,3 +238,8 @@ Outputs:
     Value: !Ref EC2InstanceProfile
     Export:
       Name: !Sub "${AWS::StackName}-EC2InstanceProfile"
+  Logical ID:
+    Description: Information about the value
+    Value: Value to return
+    Export:
+      Name: Name of resource to export
