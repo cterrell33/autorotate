@@ -144,7 +144,9 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_MEDIUM
         Image: 'aws/codebuild/amazonlinux2-x86_64-standard:4.0'
-      ServiceRole: !GetAtt CodeBuildRole1.Arn
+      ServiceRole: 
+      - !GetAtt CodeBuildRole1.Arn
+      - 
       Source: 
         Type: GITHUB
         Location: 'https://github.com/cterrell33/autorotate.git'
@@ -200,6 +202,7 @@ Resources:
       Path: /
       ManagedPolicyArns:
         - !Sub arn:${AWS::Partition}:iam::aws:policy/AWSCodeBuildAdminAccess
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/SecretsManagerReadWrite
 
   Routetable:
     Type: AWS::EC2::RouteTable

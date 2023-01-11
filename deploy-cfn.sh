@@ -32,7 +32,7 @@ NAME=$argN$argU$argR
 echo "This script valdates a CloudFormation template, and creates/updates a CloudFormation Stack"
 
 aws cloudformation deploy \
-    --stack-name cfn-stack1-$NAME \
+    --stack-name cfn-stack-$NAME \
     --template-file cfn-templates/$argN.yml \
     --parameter-overrides file://parameters/$argN.json \
     --no-fail-on-empty-changeset \
