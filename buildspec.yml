@@ -7,7 +7,7 @@ phases:
       - pip3 uninstall awscli -y
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       - unzip awscliv2.zip
-      - ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
+      - ./aws/install --update /usr/local/aws-cli -b /usr/local/bin
       - yum install iputils which -y
       - which ping 
       - ping -c 10 172.31.2.156

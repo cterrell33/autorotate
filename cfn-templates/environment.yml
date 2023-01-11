@@ -181,6 +181,27 @@ Resources:
                   - 'ssm:GetParameters'
                 Effect: Allow
                 Resource: '*'
+      
+  Routetable:
+    Type: AWS::EC2::RouteTable
+    Properties: 
+      Tags: 
+      - Keys: Name
+      - Value: RT2
+      VpcId: $VpcId
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Properties: 
+      AllocationId: !GetAtt NATGatewayEIP.AllocationId
+      ConnectivityType: public
+      PrivateIpAddress: String
+      SubnetId: String
+  NATGatewayEIP:
+   Type: AWS::EC2::EIP
+   Properties:
+      Domain: $VpcId
+
+
 Outputs:
   InstanceSecurityGroup:
     Description: Windows Server Security Group
