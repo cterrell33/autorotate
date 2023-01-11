@@ -1,6 +1,6 @@
 [
     {
-      "ParameterKey": "VpcId",
+      "ParameterKey": "VPCID",
       "ParameterValue": "vpc-0813b2cc879aae518"
     },
     {

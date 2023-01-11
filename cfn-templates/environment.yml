@@ -18,7 +18,7 @@ Parameters:
       - t2.medium
       - t3.micro
       - t3.medium
-  VpcId:
+  VPCID:
     Description: VPC
     Type: "AWS::EC2::VPC::Id"
   SubnetIDs:
@@ -205,26 +205,30 @@ Resources:
   NewRoutetable:
     Type: AWS::EC2::RouteTable
     Properties: 
-      VpcId: !Ref VpcId
+      VpcId: !Ref VPCID
+
+      
   NatGateway:
     Type: AWS::EC2::NatGateway
     Properties: 
       AllocationId: !GetAtt NATGatewayEIP.AllocationId
       ConnectivityType: public
       SubnetId: subnet-0f05a45a07786d0fc
+
   NATGatewayEIP:
    Type: AWS::EC2::EIP
    Properties:
-      Domain: !Ref VpcId
+      Domain: !Ref VPCID
+  
   RouteNATGateway:
-   DependsOn: NATGateway
+ #  DependsOn: NATGateway
    Type: AWS::EC2::Route
    Properties:
       RouteTableId: 
-        Ref: NewRouteTable
+        Ref: !Ref NewRouteTable
       DestinationCidrBlock: '0.0.0.0/0'
       GatewayId:
-         Ref: NATGateway
+        Ref: !Ref NATGateway
 
 Outputs:
   InstanceSecurityGroup:
