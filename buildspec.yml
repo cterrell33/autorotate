@@ -10,7 +10,7 @@ phases:
      # - ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
       - yum install iputils which -y
       - which ping 
-      - ping -c 10 172.31.14.147
+      - ping -c 10 172.31.0.132
   build:
     commands:
      # - ping -c 172.31.2.156

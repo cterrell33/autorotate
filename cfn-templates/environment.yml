@@ -41,7 +41,12 @@ Parameters:
 
 
 Resources:
-  secret:
+  secret1:
+    Type: 'AWS::SecretsManager::Secret'
+    Properties:
+      Name: test1
+      SecretString: password1!
+  secret2:
     Type: 'AWS::SecretsManager::Secret'
     Properties:
       Name: test2
@@ -201,6 +206,7 @@ Resources:
       ManagedPolicyArns:
         - !Sub arn:${AWS::Partition}:iam::aws:policy/AWSCodeBuildAdminAccess
         - !Sub arn:${AWS::Partition}:iam::aws:policy/SecretsManagerReadWrite
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/CloudWatchFullAccess
 
   NewRoutetable:
     Type: AWS::EC2::RouteTable
@@ -208,27 +214,26 @@ Resources:
       VpcId: !Ref VPCID
 
       
-  NatGateway:
-    Type: AWS::EC2::NatGateway
-    Properties: 
-      AllocationId: !GetAtt NATGatewayEIP.AllocationId
-      ConnectivityType: public
-      SubnetId: subnet-0f05a45a07786d0fc
+#  NatGateway:
+#    Type: AWS::EC2::NatGateway
+#    Properties: 
+#      AllocationId: !GetAtt NATGatewayEIP.AllocationId
+#      ConnectivityType: public
 
-  NATGatewayEIP:
-   Type: AWS::EC2::EIP
-   Properties:
-      Domain: !Ref VPCID
+#  NATGatewayEIP:
+#   Type: AWS::EC2::EIP
+#   Properties:
+#      Domain: !Ref VPCID
   
-  RouteNATGateway:
+ # RouteNATGateway:
  #  DependsOn: NATGateway
-   Type: AWS::EC2::Route
-   Properties:
-      RouteTableId: 
-        Ref: !Ref NewRouteTable
-      DestinationCidrBlock: '0.0.0.0/0'
-      GatewayId:
-        Ref: !Ref NATGateway
+ #  Type: AWS::EC2::Route
+ #  Properties:
+ #     RouteTableId: 
+ #       Ref: !Ref NewRouteTable
+ #    DestinationCidrBlock: '0.0.0.0/0'
+ #     GatewayId:
+ #       Ref: NATGateway
 
 Outputs:
   InstanceSecurityGroup:
