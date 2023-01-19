@@ -155,40 +155,6 @@ Resources:
         Location: 'https://github.com/cterrell33/autorotate.git'
       TimeoutInMinutes: 10
 
-
-#  CodeBuildRole:
-#    Type: 'AWS::IAM::Role'
-#    Properties:
-#      AssumeRolePolicyDocument:
-#        Statement:
-#          - Action:
-#              - 'sts:AssumeRole'
-#            Effect: Allow
-#            Principal:
-#              Service:
-#                - codebuild.amazonaws.com
-#                - secretsmanager.amazonaws.com
-#        Version: 2012-10-17
-#      Path: /
-#      Policies:
-#        - PolicyName: CodeBuildAccess
-#          PolicyDocument:
-#            Version: 2012-10-17
-#            Statement:
-#              - Action:
-#                  - 'logs:CreateLogGroup'
-#                  - 'logs:PutLogEvents'
-#                  - 'logs:CreateLogStream'
-#                  - 'ecr:*'
-#                  - 'codebuild:CreateReportGroup'
-#                  - 'codebuild:CreateReport'
-#                  - 'codebuild:UpdateReport'
-#                  - 'codebuild:BatchPutCodeCoverages'
-#                  - 'codebuild:BatchPutTestCases'
-#                  - 'ssm:GetParameters'
-#                Effect: Allow
-#                Resource: '*'
-  
   CodeBuildRole:
     Type: 'AWS::IAM::Role'
     Properties:
