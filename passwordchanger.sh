@@ -1,6 +1,6 @@
 #!/bin/bash
 
-users=$("test1" "test2")
+
 currentpw=$(aws secretsmanager get-secret-value --secret-id $users --query SecretString --output text)
 newpw=$(aws secretsmanager get-random-password --require-each-included-type --password-length 12 --output text)
 
