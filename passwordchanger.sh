@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-currentpw=$(aws secretsmanager get-secret-value --secret-id $users --query SecretString --output text)
+currentpw=$(aws secretsmanager get-secret-value --secret-id test1 --query SecretString --output text)
 newpw=$(aws secretsmanager get-random-password --require-each-included-type --password-length 12 --output text)
 
 
@@ -13,7 +13,7 @@ else
 fi 
 
 # Update Secrets Manager with new Random Generated PW
-aws secretsmanager update-secret --secret-id $users --secret-string "$newpw"
+aws secretsmanager update-secret --secret-id test1 --secret-string "$newpw"
 if [ $? -eq 0 ]; then
     echo "New PW Stored Successfully"
 else 
