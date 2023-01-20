@@ -13,8 +13,8 @@ else
 fi 
 
 # Update Secrets Manager with new Random Generated PW
-aws secretsmanager update-secret --secret-id test1 --secret-string "$newpw"
 if [ $? -eq 0 ]; then
+    aws secretsmanager update-secret --secret-id test1 --secret-string "$newpw"
     echo "New PW Stored Successfully"
 else 
     echo "Password not Stored in Secrets Manager"

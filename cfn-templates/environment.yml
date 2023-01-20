@@ -153,7 +153,13 @@ Resources:
       Source: 
         Type: GITHUB
         Location: 'https://github.com/cterrell33/autorotate.git'
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
       TimeoutInMinutes: 10
+
 
   CodeBuildRole:
     Type: 'AWS::IAM::Role'
@@ -166,6 +172,7 @@ Resources:
               Service:
                 - codebuild.amazonaws.com
                 - secretsmanager.amazonaws.com
+                - ec2.amazonaws.com
             Action:
               - 'sts:AssumeRole'
       Path: /
@@ -180,27 +187,25 @@ Resources:
     Properties: 
       VpcId: !Ref VPCID
 
-      
-#  NatGateway:
-#    Type: AWS::EC2::NatGateway
-#    Properties: 
-#      AllocationId: !GetAtt NATGatewayEIP.AllocationId
-#      ConnectivityType: public
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Properties: 
+      AllocationId: !GetAtt NATGatewayEIP.AllocationId
+      ConnectivityType: public
+      SubnetId: [!GetAtt WindowsEC2Instance.SubnetId]
 
-#  NATGatewayEIP:
-#   Type: AWS::EC2::EIP
-#   Properties:
-#      Domain: !Ref VPCID
+  NATGatewayEIP:
+   Type: AWS::EC2::EIP
+   Properties:
+     Domain: !Ref VPCID
   
- # RouteNATGateway:
- #  DependsOn: NATGateway
- #  Type: AWS::EC2::Route
- #  Properties:
- #     RouteTableId: 
- #       Ref: !Ref NewRouteTable
- #    DestinationCidrBlock: '0.0.0.0/0'
- #     GatewayId:
- #       Ref: NATGateway
+#  RouteNATGateway:
+#   DependsOn: NATGateway
+#   Type: AWS::EC2::Route
+#   Properties:
+#      RouteTableId: !Ref NewRouteTable
+#      DestinationCidrBlock: '0.0.0.0/0'
+#      NatGatewayId: !Ref NatGateway
 
 Outputs:
   InstanceSecurityGroup:
